@@ -697,7 +697,7 @@
         <div class="success-title">Найдено!</div>
         <div class="discount-badge" id="discount-text">30% SCONTO</div>
         <p class="success-msg" id="success-msg">Найдено с первой попытки! Орлиный глаз!</p>
-        <button class="btn-primary" onclick="showPuzzleSelect()" style="margin-top:8px;">
+        <button class="btn-primary" onclick="showSelectScreen()" style="margin-top:8px;">
           Играть снова
         </button>
         <button class="back-btn" onclick="showScreen('intro')">← На главную</button>
@@ -717,7 +717,7 @@
   <div class="divider"></div>
   <p class="try-msg">У тебя ещё одна попытка. Внимательно изучи детали иллюстрации.</p>
   <button class="btn-primary" onclick="resumeGame()">Попробовать — Последняя попытка</button>
-  <button class="back-btn" onclick="showPuzzleSelect()">Выбрать другую загадку</button>
+  <button class="back-btn" onclick="showSelectScreen()">Выбрать другую загадку</button>
 </div>
 
 <!-- FAIL -->
@@ -728,7 +728,7 @@
   <p class="fail-msg" id="fail-msg">Объект был прямо перед тобой. Тайна остаётся нераскрытой…</p>
   <div id="reveal-container" style="margin-bottom:20px;max-width:280px;border:2px solid rgba(212,164,50,0.3);border-radius:4px;overflow:hidden;"></div>
   <button class="btn-primary" onclick="restartCurrentPuzzle()">Попробовать сначала</button>
-  <button class="back-btn" onclick="showPuzzleSelect()">Выбрать другую загадку</button>
+  <button class="back-btn" onclick="showSelectScreen()">Выбрать другую загадку</button>
 </div>
 
 <!-- Audio -->
