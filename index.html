@@ -586,11 +586,39 @@
     border-color: var(--gold);
     color: var(--parchment);
   }
+
+  /* Music toggle button */
+  #music-toggle {
+    position: fixed;
+    top: 14px;
+    right: 60px;
+    z-index: 1000;
+    background: rgba(42,26,10,0.85);
+    border: 1px solid rgba(212,164,50,0.5);
+    color: var(--gold);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  #music-toggle:hover {
+    border-color: var(--gold);
+    background: rgba(42,26,10,0.95);
+    transform: scale(1.1);
+  }
 </style>
 </head>
 <body>
 
 <div id="bg-overlay"></div>
+<button id="music-toggle" onclick="toggleMusic()" title="Музыка вкл/выкл">🎵</button>
+
 
 <!-- Custom cursor -->
 <div id="cursor">
@@ -628,7 +656,7 @@
   </div>
   <div class="divider"></div>
   <p style="font-style:italic;color:var(--sepia);font-size:0.82rem;margin-bottom:16px;">
-    ⏳ 15 секунд &nbsp;·&nbsp; 2 попытки &nbsp;·&nbsp; до 30% скидки
+    ⏳ 30 секунд &nbsp;·&nbsp; 2 попытки &nbsp;·&nbsp; до 30% скидки
   </p>
   <button class="btn-primary" onclick="showSelectScreen()">Начать игру</button>
 </div>
@@ -800,10 +828,12 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) {
     s.classList.add('hidden');
     s.style.display = 'none';
+    s.style.zIndex = '10';
   });
   var el = document.getElementById(id);
   el.classList.remove('hidden');
   el.style.display = 'flex';
+  el.style.zIndex = '500';
 }
 
 function showPuzzleSelect() {
@@ -827,6 +857,20 @@ function showIntro() {
   showScreen('intro');
 }
 
+
+function toggleMusic() {
+  var btn = document.getElementById('music-toggle');
+  if (music.paused) {
+    music.play().catch(function(){});
+    btn.textContent = '🎵';
+    btn.title = 'Выключить музыку';
+  } else {
+    music.pause();
+    btn.textContent = '🔇';
+    btn.title = 'Включить музыку';
+  }
+}
+
 function startMusic() {
   if (!musicStarted) {
     music.play().catch(() => {});
@@ -837,7 +881,7 @@ function startMusic() {
 function startPuzzle(idx) {
   currentPuzzle = PUZZLES[idx];
   attemptsLeft = 2;
-  timeLeft = 15;
+  timeLeft = 30;
   startMusic();
   setupGame();
   showScreen('game');
@@ -846,14 +890,14 @@ function startPuzzle(idx) {
 function restartCurrentPuzzle() {
   if (!currentPuzzle) return;
   attemptsLeft = 2;
-  timeLeft = 15;
+  timeLeft = 30;
   setupGame();
   showScreen('game');
 }
 
 function resumeGame() {
   // Coming back for second attempt
-  timeLeft = 15;
+  timeLeft = 30;
   setupGame(true);
   showScreen('game');
 }
@@ -933,7 +977,7 @@ function stopTimer() {
 function updateTimerDisplay() {
   const el = document.getElementById('timer-number');
   el.textContent = timeLeft;
-  if (timeLeft <= 5) {
+  if (timeLeft <= 10) {
     el.classList.add('urgent');
   } else {
     el.classList.remove('urgent');
@@ -948,7 +992,7 @@ function updateTimerDisplay() {
 
 function updateUrgency() {
   const bgOverlay = document.getElementById('bg-overlay');
-  const pct = 1 - (timeLeft / 15); // 0=start, 1=end
+  const pct = 1 - (timeLeft / 30); // 0=start, 1=end
 
   // Background color shift: calm cream → alarming red
   const r1 = Math.round(245 + (80) * pct);
