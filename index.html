@@ -804,7 +804,9 @@ function showScreen(id) {
 function showPuzzleSelect() {
   stopTimer();
   gameActive = false;
-  showScreen('puzzle-select');
+  resetUrgency();
+  music.playbackRate = 1.0;
+  showScreen('intro');
   startMusic();
 }
 
@@ -949,7 +951,7 @@ function updateUrgency() {
   }
 
   // Music playback rate: 1.0 → 1.5
-  music.playbackRate = 1.0 + pct * 0.5;
+  // music speed unchanged
 }
 
 function handleTimeOut() {
